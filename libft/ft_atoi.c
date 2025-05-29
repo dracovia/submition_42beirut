@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 08:55:04 by mfassad           #+#    #+#             */
-/*   Updated: 2025/05/23 08:57:34 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/05/29 16:05:25 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_atoi(const char *str)
 {
 	int		i;
 	long	res;
-	int	sign;
+	int		sign;
 
 	i = 0;
 	res = 0;

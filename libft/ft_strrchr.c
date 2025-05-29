@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 09:29:59 by mfassad           #+#    #+#             */
-/*   Updated: 2025/05/23 09:30:55 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/05/29 16:29:44 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,8 @@ char	*ft_strrchr(const char *s, int c)
 		if (*s == (char)c)
 			last = s;
 		if (*s == '\0')
-			break;
+			break ;
 		s++;
 	}
 	return ((char *)last);
 }
-

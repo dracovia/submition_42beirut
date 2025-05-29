@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 10:28:51 by mfassad           #+#    #+#             */
-/*   Updated: 2025/05/25 10:28:51 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/05/29 16:27:36 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	size_t	i;
-	size_t len;
+	size_t	len;
 	char	*str;
-	size_t k;
+	size_t	k;
 
 	if (!s1 || !s2)
 		return (NULL);
@@ -27,7 +27,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (!str)
 		return (NULL);
 	i = 0;
-	while(s1[i])
+	while (s1[i])
 	{
 		str[i] = s1[i];
 		i++;
@@ -35,11 +35,9 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	k = 0;
 	while (s2[k])
 	{
-		str[i+k] = s2[k];
+		str[i + k] = s2[k];
 		k++;
 	}
-	str[i+k] = '\0';
+	str[i + k] = '\0';
 	return (str);
 }
-
-

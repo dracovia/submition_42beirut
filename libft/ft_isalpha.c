@@ -6,9 +6,10 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 09:02:44 by mfassad           #+#    #+#             */
-/*   Updated: 2025/05/23 09:03:17 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/05/29 16:06:12 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 int	ft_isalpha(int c)

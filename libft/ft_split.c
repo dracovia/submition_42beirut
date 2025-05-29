@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 11:43:02 by mfassad           #+#    #+#             */
-/*   Updated: 2025/05/25 11:43:02 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/05/29 16:25:39 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 static size_t	word_count(const char *s, char c)
 {
-	size_t	count = 0;
+	size_t	count;
 
+	count = 0;
 	while (*s)
 	{
 		while (*s == c)
@@ -31,8 +32,9 @@ static size_t	word_count(const char *s, char c)
 
 static char	*next_word(const char *s, char c, size_t *len)
 {
-	size_t	i = 0;
+	size_t	i;
 
+	i = 0;
 	while (s[i] && s[i] != c)
 		i++;
 	*len = i;
@@ -41,7 +43,7 @@ static char	*next_word(const char *s, char c, size_t *len)
 
 char	**ft_split(char const *s, char c)
 {
-	size_t		i = 0;
+	size_t		i;
 	size_t		len;
 	char		**arr;
 
@@ -50,6 +52,7 @@ char	**ft_split(char const *s, char c)
 	arr = (char **)malloc((word_count(s, c) + 1) * sizeof(char *));
 	if (!arr)
 		return (NULL);
+	i = 0;
 	while (*s)
 	{
 		while (*s == c)
@@ -65,5 +68,3 @@ char	**ft_split(char const *s, char c)
 	arr[i] = NULL;
 	return (arr);
 }
-
-

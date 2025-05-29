@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 09:20:56 by mfassad           #+#    #+#             */
-/*   Updated: 2025/05/23 09:23:48 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/05/29 16:27:44 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,3 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 		dst[i + j] = '\0';
 	return (i + ft_strlen(src));
 }
-

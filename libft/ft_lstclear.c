@@ -6,20 +6,19 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 14:11:24 by mfassad           #+#    #+#             */
-/*   Updated: 2025/05/28 14:11:24 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/05/29 16:12:06 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
-void ft_lstclear(t_list **lst, void (*del)(void *))
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-    if (!lst || !*lst || !del)
-        return;
-    ft_lstclear(&((*lst)->next), del);
-    del((*lst)->content);
-    free(*lst);
-    *lst = NULL;
+	if (!lst || !*lst || !del)
+		return ;
+	ft_lstclear(&((*lst)->next), del);
+	del((*lst)->content);
+	free(*lst);
+	*lst = NULL;
 }
-

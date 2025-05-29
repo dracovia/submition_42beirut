@@ -6,16 +6,16 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:46:35 by mfassad           #+#    #+#             */
-/*   Updated: 2025/05/25 14:46:35 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/05/29 16:46:32 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "libft.h"
 
-static int length_num(int n)
+static	int	length_num(int n)
 {
-	int len;
+	int	len;
 
 	len = 0;
 	if (n <= 0)
@@ -28,11 +28,11 @@ static int length_num(int n)
 	return (len);
 }
 
-char *ft_itoa(int n)
+char	*ft_itoa(int n)
 {
-	char *res;
-	int len;
-	long long num;
+	char		*res;
+	int			len;
+	long long	num;
 
 	len = length_num(n);
 	res = (char *)malloc(sizeof(char) * (len + 1));
@@ -40,17 +40,17 @@ char *ft_itoa(int n)
 		return (NULL);
 	res[len--] = '\0';
 	num = (long)n;
-	if (num == 0)
-	{
+	if (n == 0)
 		res[0] = '0';
-		return (res);
-	}
 	if (num < 0)
 	{
 		num *= -1;
 		res[0] = '-';
 	}
 	while (num > 0)
-		res[len--] = (num % 10) + '0', num /= 10;
+	{
+		res[len--] = (num % 10) + '0';
+		num /= 10;
+	}
 	return (res);
 }
