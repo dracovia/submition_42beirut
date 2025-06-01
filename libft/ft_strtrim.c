@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 10:49:37 by mfassad           #+#    #+#             */
-/*   Updated: 2025/05/29 16:47:50 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/06/01 16:49:21 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,3 @@ char	*ft_strtrim(char const *s1, char const *set)
 		end--;
 	return (ft_strtrim_copy(s1, start, end));
 }
-

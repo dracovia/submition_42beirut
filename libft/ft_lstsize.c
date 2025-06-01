@@ -6,12 +6,11 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 14:07:58 by mfassad           #+#    #+#             */
-/*   Updated: 2025/05/29 16:19:09 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/06/01 17:04:49 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
 int	ft_lstsize(t_list *lst)
 {

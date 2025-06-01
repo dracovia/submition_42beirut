@@ -6,12 +6,11 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 14:14:37 by mfassad           #+#    #+#             */
-/*   Updated: 2025/05/29 16:14:34 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/06/01 17:04:31 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
 t_list	*ft_lstlast(t_list *lst)
 {
