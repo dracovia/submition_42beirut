@@ -13,48 +13,50 @@
 #include <stdlib.h>
 #include "libft.h"
 
-static	int	is_in(char c, char const *set)
+static int	is_in_set(char c, const char *set)
 {
-	int	i;
-
-	i = 0;
-	while (set[i])
+	while (*set)
 	{
-		if (c == set[i])
+		if (c == *set)
 			return (1);
-		i++;
+		set++;
 	}
 	return (0);
 }
 
-static int	get_len(char const *s1, char const *set, size_t *start, size_t *end)
+static char	*ft_strtrim_copy(const char *s1, size_t start, size_t end)
 {
-	while (s1[*start] && is_in(s1[*start], set))
-		(*start)++;
-	while ((*end) > (*start) && is_in(s1[(*end) - 1], set))
-		(*end)--;
-	return (*end - *start);
+	size_t	len;
+	char	*trimmed;
+	size_t	i;
+
+	len = end - start;
+	trimmed = (char *)malloc(sizeof(char) * (len + 1));
+	if (!trimmed)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		trimmed[i] = s1[start + i];
+		i++;
+	}
+	trimmed[i] = '\0';
+	return (trimmed);
 }
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	size_t	start;
-	char	*str;
-	size_t	i;
 	size_t	end;
 
 	if (!s1 || !set)
 		return (NULL);
-	end = ft_strlen(s1);
 	start = 0;
-	if (end == 0)
-		return ((char *)malloc(1));
-	str = (char *)malloc(sizeof(char) * (get_len(s1, set, &start, &end) + 1));
-	if (!str)
-		return (NULL);
-	i = 0;
-	while (start < end)
-		str[i++] = s1[start++];
-	str[i] = '\0';
-	return (str);
+	while (s1[start] && is_in_set(s1[start], set))
+		start++;
+	end = ft_strlen(s1);
+	while (end > start && is_in_set(s1[end - 1], set))
+		end--;
+	return (ft_strtrim_copy(s1, start, end));
 }
+
