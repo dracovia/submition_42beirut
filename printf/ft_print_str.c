@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_print_str.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/03 13:34:47 by mfassad           #+#    #+#             */
-/*   Updated: 2025/07/03 13:36:54 by mfassad          ###   ########.fr       */
+/*   Created: 2025/07/03 19:46:41 by mfassad           #+#    #+#             */
+/*   Updated: 2025/07/03 19:46:41 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "ft_printf.h"
 
-int	ft_putstr_fd(char *s, int fd)
+int ft_print_str(char *str)
 {
-	int	i;
+    int i = 0;
 
-	if (!s)
-		return ;
-	i = 0;
-	while (s[i])
-	{
-		write(fd, &s[i], 1);
-		i++;
-	}
-	return (i);
+    if (!str)
+        return (write(1, "(null)", 6));
+    while (str[i])
+        write(1, &str[i++], 1);
+    return (i);
 }

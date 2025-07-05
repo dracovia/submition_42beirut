@@ -10,27 +10,32 @@
 #                                                                              #
 # **************************************************************************** #
 
-#include <unistd.h>
-#include <stdarg.h>
+# include <unistd.h>
+# include <stdarg.h>
 
-NAME = libftprintf
-CC = cc 
-CFLAGS = -Wall -Wextra -Werror
-RM = rm -f
-SRC = ft_printf.c ft_putstr.c
-OBJ = $(SRC : .c = .o)
+NAME    = libftprintf.a
+SRC     = ft_printf.c ft_print_char.c ft_print_str.c ft_print_ptr.c \
+          ft_print_int.c ft_print_unsigned.c ft_print_hex.c
+OBJ     = $(SRC:.c=.o)
+CC      = cc
+CFLAGS  = -Wall -Wextra -Werror
+AR      = ar rcs
+RM      = rm -f
 
-all : $(NAME)
+all: $(NAME)
 
-$(NAME) : %(OBJ)
-	ar rcs $(NAME) $(OBJ)	
+$(NAME): $(OBJ)
+	$(AR) $(NAME) $(OBJ)
 
-%.o : %.cc
-	$(CC) $(CFLAGS) -c $< -o $@
-	
-clean: 
+clean:
 	$(RM) $(OBJ)
 
-fclean : clean 
+fclean: clean
 	$(RM) $(NAME)
-re : fclean all
+
+re: fclean all
+
+bonus: all
+
+.PHONY: all clean fclean re bonus
+

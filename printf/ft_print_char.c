@@ -1,31 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnum_fd.c                                     :+:      :+:    :+:   */
+/*   ft_print_char.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/03 14:02:16 by mfassad           #+#    #+#             */
-/*   Updated: 2025/07/03 14:05:14 by mfassad          ###   ########.fr       */
+/*   Created: 2025/07/03 19:45:45 by mfassad           #+#    #+#             */
+/*   Updated: 2025/07/03 19:45:45 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_putnbr_fd(int n, int fd)
-{
-	char	c;
+#include "ft_printf.h"
 
-	if (n == -2147483648)
-	{
-		write(fd, "-2147483648", 11);
-		return (11);
-	}
-	if (n < 0)
-	{
-		write(fd, "-", 1);
-		n = -n;
-	}
-	if (n >= 10)
-		ft_putnbr_fd(n / 10, fd);
-	c = (n % 10) + '0';
-	write(fd, &c, 1);
+int ft_print_char(char c)
+{
+    return (write (1, &c, 1));
 }
