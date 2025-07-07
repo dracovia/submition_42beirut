@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 16:59:38 by mfassad           #+#    #+#             */
-/*   Updated: 2025/07/06 16:59:38 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/07/07 12:05:11 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static char	*extract_line(char *stash)
 static char	*save_remain(char *stash)
 {
 	int		i;
-	int		j;
 	char	*new_stash;
 
 	i = 0;

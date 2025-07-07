@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 22:23:12 by mfassad           #+#    #+#             */
-/*   Updated: 2025/07/06 22:23:12 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/07/07 11:26:40 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,26 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-char	*ft_strdup(const char *s)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	size_t	len = ft_strlen(s);
-	char	*copy = (char *)malloc(sizeof(char) * (len + 1));
-	size_t	i = 0;
+	size_t	len1 = s1 ? ft_strlen(s1) : 0;
+	size_t	len2 = s2 ? ft_strlen(s2) : 0;
+	char	*joined = (char *)malloc(len1 + len2 + 1);
+	size_t	i = 0, j = 0;
 
-	if (!copy)
+	if (!joined)
 		return (NULL);
-	while (i < len)
+	while (s1 && s1[i])
 	{
-		copy[i] = s[i];
+		joined[i] = s1[i];
 		i++;
 	}
-	copy[i] = '\0';
-	return (copy);
+	while (s2 && s2[j])
+		joined[i++] = s2[j++];
+	joined[i] = '\0';
+	return (joined);
 }
+
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
