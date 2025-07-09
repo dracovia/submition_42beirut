@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 16:59:38 by mfassad           #+#    #+#             */
-/*   Updated: 2025/07/07 12:05:11 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/07/09 11:02:27 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,22 @@ static char	*save_remain(char *stash)
 	char	*new_stash;
 
 	i = 0;
+	if (!stash)
+		return (NULL);
 	while (stash[i] && stash[i] != '\n')
 		i++;
-	if (!stash[i]) // no newline, nothing left
+	if (!stash[i])
 	{
 		free(stash);
 		return (NULL);
 	}
-	i++; // move past the newline
-	new_stash = ft_substr(stash, i, ft_strlen(stash) - i);
+	i++;
+	if (stash[i] == '\0')
+	{
+		free(stash);
+		return (NULL);
+	}
+	new_stash = ft_substr(stash, i, ft_strlen(stash + i));
 	free(stash);
 	return (new_stash);
 }
@@ -50,6 +57,7 @@ static char	*save_remain(char *stash)
 static char	*read_and_stash(int fd, char *stash)
 {
 	char	*buf;
+	char	*tmp;
 	int		bytes_read;
 
 	buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
@@ -66,7 +74,9 @@ static char	*read_and_stash(int fd, char *stash)
 			return (NULL);
 		}
 		buf[bytes_read] = '\0';
-		stash = ft_strjoin(stash, buf);
+		tmp = ft_strjoin(stash, buf);
+		free(stash);
+		stash = tmp;
 	}
 	free(buf);
 	return (stash);
@@ -86,5 +96,3 @@ char	*get_next_line(int fd)
 	stash = save_remain(stash);
 	return (line);
 }
-
-

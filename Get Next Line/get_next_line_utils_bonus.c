@@ -6,16 +6,17 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 22:23:12 by mfassad           #+#    #+#             */
-/*   Updated: 2025/07/07 11:26:40 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/07/09 10:38:04 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
 
 size_t	ft_strlen(const char *s)
 {
-	size_t	i = 0;
+	size_t	i;
 
+	i = 0;
 	if (!s)
 		return (0);
 	while (s[i])
@@ -40,32 +41,17 @@ char	*ft_strchr(const char *s, int c)
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	size_t	len1 = s1 ? ft_strlen(s1) : 0;
-	size_t	len2 = s2 ? ft_strlen(s2) : 0;
-	char	*joined = (char *)malloc(len1 + len2 + 1);
-	size_t	i = 0, j = 0;
+	size_t	len1;
+	size_t	len2;
+	char	*res;
+	size_t	i;
+	size_t	k;
 
-	if (!joined)
-		return (NULL);
-	while (s1 && s1[i])
-	{
-		joined[i] = s1[i];
-		i++;
-	}
-	while (s2 && s2[j])
-		joined[i++] = s2[j++];
-	joined[i] = '\0';
-	return (joined);
-}
-
-
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	size_t	len1 = ft_strlen(s1);
-	size_t	len2 = ft_strlen(s2);
-	char	*res = (char *)malloc(sizeof(char) * (len1 + len2 + 1));
-	size_t	i = 0, k = 0;
-
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	i = 0;
+	k = 0;
+	res = (char *)malloc(sizeof(char) * (len1 + len2 + 1));
 	if (!res)
 		return (NULL);
 	while (s1 && s1[i])
@@ -79,10 +65,13 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	size_t	i = 0;
-	size_t	s_len = ft_strlen(s);
+	size_t	i;
+	size_t	s_len;
 	char	*res;
 
+	i = 0;
+	s_len = ft_strlen(s);
+	s_len = ft_strlen(s);
 	if (!s)
 		return (NULL);
 	if (start >= s_len)
@@ -99,4 +88,24 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	res[i] = '\0';
 	return (res);
+}
+
+char	*ft_strdup(const char *s)
+{
+	size_t	len;
+	char	*copy;
+	size_t	i;
+
+	len = ft_strlen(s);
+	copy = (char *)malloc(len + 1);
+	i = 0;
+	if (!copy)
+		return (NULL);
+	while (i < len)
+	{
+		copy[i] = s[i];
+		i++;
+	}
+	copy[i] = '\0';
+	return (copy);
 }
