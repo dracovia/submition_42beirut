@@ -6,7 +6,7 @@
 #    By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/02 18:13:09 by mfassad           #+#    #+#              #
-#    Updated: 2025/08/02 18:13:09 by mfassad          ###   ########.fr        #
+#    Updated: 2025/08/04 17:26:00 by mfassad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRC		= $(wildcard $(SRC_DIR)/*.c)
 OBJ		= $(SRC:.c=.o)
 
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -I./minilibx-linux
 
 MLX_DIR	= ./minilibx-linux
 MLX		= $(MLX_DIR)/libmlx.a

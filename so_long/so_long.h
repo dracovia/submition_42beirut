@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 18:26:48 by mfassad           #+#    #+#             */
-/*   Updated: 2025/08/02 18:26:48 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/08/04 17:29:31 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
-# include <mlx.h>
+# include "mlx.h"
 
 # define TILE_SIZE 64
 
@@ -49,5 +49,8 @@ void	render_map(t_game *game);
 int		handle_key(int keycode, t_game *game);
 int		close_game(t_game *game);
 void	error_and_exit(char *msg);
+void	ft_putnbr_fd(int n, int fd);
+size_t	ft_strlen(const char *s);
+
 
 #endif

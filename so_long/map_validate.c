@@ -6,12 +6,30 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 18:54:25 by mfassad           #+#    #+#             */
-/*   Updated: 2025/08/02 18:54:25 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/08/04 17:42:49 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+static void	check_walls(t_game *game)
+{
+	int x, y;
+
+	y = 0;
+	while (y < game->height)
+	{
+		x = 0;
+		while (x < game->width)
+		{
+			if ((y == 0 || y == game->height - 1 || x == 0 || x == game->width - 1)
+				&& game->map[y][x] != '1')
+				error_and_exit("Map must be enclosed by walls");
+			x++;
+		}
+		y++;
+	}
+}
 static void	count_elements(t_game *game, int *player_count, int *exit_count, int *collect_count)
 {
 	int x, y;
@@ -40,7 +58,22 @@ static void	count_elements(t_game *game, int *player_count, int *exit_count, int
 		y++;
 	}
 }
+static void	check_rectangular(t_game *game)
+{
+	int	y;
+	int	len;
 
+	y = 0;
+	while (y < game->height)
+	{
+		len = 0;
+		while (game->map[y][len])
+			len++;
+		if (len != game->width)
+			error_and_exit("Map must be rectangular");
+		y++;
+	}
+}
 static void	set_player_position(t_game *game)
 {
 	int y, x;

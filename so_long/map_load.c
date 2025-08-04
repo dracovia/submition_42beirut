@@ -6,21 +6,13 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 18:40:48 by mfassad           #+#    #+#             */
-/*   Updated: 2025/08/02 18:40:48 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/08/04 17:30:29 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 #include "get_next_line.h"
 #include <fcntl.h>
-
-static size_t	ft_strlen(const char *s)
-{
-	size_t i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
 
 static int	get_line_count(char *filename)
 {
