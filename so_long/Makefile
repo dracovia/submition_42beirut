@@ -17,12 +17,11 @@ SRC		= $(wildcard $(SRC_DIR)/*.c)
 OBJ		= $(SRC:.c=.o)
 
 CC		= cc
-CFLAGS = -Wall -Wextra -Werror -I./minilibx-linux
+CFLAGS	= -Wall -Wextra -Werror -I./minilibx-linux
 
 MLX_DIR	= ./minilibx-linux
 MLX		= $(MLX_DIR)/libmlx.a
 MLX_FLAGS = -L$(MLX_DIR) -lmlx -lX11 -lXext -lm
-
 
 all: $(NAME)
 
@@ -32,12 +31,15 @@ $(NAME): $(OBJ)
 
 clean:
 	@rm -f $(OBJ)
+	@$(MAKE) -C $(MLX_DIR) clean
 
 fclean: clean
 	@rm -f $(NAME)
+	@$(MAKE) -C $(MLX_DIR) fclean
 
 re: fclean all
 
 bonus:
 	$(MAKE) BONUS=1 all
+
 .PHONY: all clean fclean re bonus

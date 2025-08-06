@@ -12,45 +12,50 @@
 
 #include "so_long.h"
 
+static void	update_player_position(t_game *game, int new_x, int new_y)
+{
+	game->map[game->player.y][game->player.x] = '0';
+	game->map[new_y][new_x] = 'P';
+	game->player.x = new_x;
+	game->player.y = new_y;
+}
+
+static void	check_tile_action(t_game *game, char tile)
+{
+	if (tile == 'C')
+		game->collectibles--;
+	else if (tile == 'E' && game->collectibles == 0)
+	{
+		mlx_destroy_window(game->mlx, game->win);
+		exit(0); // Win condition
+	}
+}
+
 static void	move_player(t_game *game, int new_x, int new_y)
 {
 	char tile = game->map[new_y][new_x];
 
 	if (tile == '1')
 		return; // Wall, can't move
-
-	if (tile == 'C')
-		game->collectibles--;
-
-	if (tile == 'E' && game->collectibles == 0)
-	{
-		mlx_destroy_window(game->mlx, game->win);
-		exit(0); // Win condition
-	}
-
-	game->map[game->player.y][game->player.x] = '0';
-	game->map[new_y][new_x] = 'P';
-	game->player.x = new_x;
-	game->player.y = new_y;
-
+	check_tile_action(game, tile);
+	update_player_position(game, new_x, new_y);
 	game->moves++;
 	ft_putnbr_fd(game->moves, 1);
 	write(1, "\n", 1);
-
 	render_map(game);
 }
 
 int	handle_key(int keycode, t_game *game)
 {
-	if (keycode == 65307) // ESC key
+	if (keycode == 65307)
 		close_game(game);
-	else if (keycode == 'w' || keycode == 65362) // up
+	else if (keycode == 'w' || keycode == 65362)
 		move_player(game, game->player.x, game->player.y - 1);
-	else if (keycode == 's' || keycode == 65364) // down
+	else if (keycode == 's' || keycode == 65364)
 		move_player(game, game->player.x, game->player.y + 1);
-	else if (keycode == 'a' || keycode == 65361) // left
+	else if (keycode == 'a' || keycode == 65361)
 		move_player(game, game->player.x - 1, game->player.y);
-	else if (keycode == 'd' || keycode == 65363) // right
+	else if (keycode == 'd' || keycode == 65363)
 		move_player(game, game->player.x + 1, game->player.y);
 	return (0);
 }
@@ -61,3 +66,4 @@ int	close_game(t_game *game)
 	exit(0);
 	return (0);
 }
+

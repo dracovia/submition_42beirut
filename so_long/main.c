@@ -25,13 +25,15 @@ int	main(int argc, char **argv)
 	game.mlx = mlx_init();
 	if (!game.mlx)
 		error_and_exit("Failed to initialize MLX");
-	game.win = mlx_new_window(game.mlx, game.width * TILE_SIZE,
-		game.height * TILE_SIZE, "so_long");
+	game.win = mlx_new_window(game.mlx,
+		game.width * TILE_SIZE, game.height * TILE_SIZE, "so_long");
 	if (!game.win)
 		error_and_exit("Failed to create window");
+
 	render_map(&game);
 	mlx_key_hook(game.win, handle_key, &game);
 	mlx_hook(game.win, 17, 0, close_game, &game);
 	mlx_loop(game.mlx);
+
 	return (0);
 }

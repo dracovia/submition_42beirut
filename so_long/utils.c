@@ -11,11 +11,13 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <unistd.h>  // for write()
+#include <unistd.h>
 
 static size_t	ft_strlen(const char *s)
 {
-	size_t i = 0;
+	size_t	i;
+
+	i = 0;
 	while (s[i])
 		i++;
 	return (i);
@@ -24,7 +26,7 @@ static size_t	ft_strlen(const char *s)
 void	error_and_exit(char *msg)
 {
 	write(2, "Error\n", 6);
-	write(2, msg, ft_strlen(msg)); // FIXED: was fd_strlen (typo)
+	write(2, msg, ft_strlen(msg));
 	write(2, "\n", 1);
 	exit(1);
 }
@@ -34,7 +36,7 @@ void	ft_putnbr_fd(int n, int fd)
 	long	nb;
 	char	c;
 
-	nb = n; // FIXED: you had nb = 0, then checked if nb < 0 — logic broken
+	nb = n;
 	if (nb < 0)
 	{
 		write(fd, "-", 1);
@@ -45,3 +47,4 @@ void	ft_putnbr_fd(int n, int fd)
 	c = (nb % 10) + '0';
 	write(fd, &c, 1);
 }
+

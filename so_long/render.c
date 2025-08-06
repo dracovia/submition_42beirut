@@ -14,22 +14,20 @@
 
 static void	load_textures(t_game *game)
 {
-	game->img_wall = mlx_xpm_file_to_image(game->mlx, "textures/wall.xpm",
-		&(game->width), &(game->height));
-	game->img_floor = mlx_xpm_file_to_image(game->mlx, "textures/floor.xpm",
-		&(game->width), &(game->height));
-	game->img_player = mlx_xpm_file_to_image(game->mlx, "textures/player.xpm",
-		&(game->width), &(game->height));
-	game->img_exit = mlx_xpm_file_to_image(game->mlx, "textures/exit.xpm",
-		&(game->width), &(game->height));
-	game->img_collectible = mlx_xpm_file_to_image(game->mlx, "textures/collectible.xpm",
-		&(game->width), &(game->height));
+	int w;
+	int h;
+
+	game->img_wall = mlx_xpm_file_to_image(game->mlx, "textures/wall.xpm", &w, &h);
+	game->img_floor = mlx_xpm_file_to_image(game->mlx, "textures/floor.xpm", &w, &h);
+	game->img_player = mlx_xpm_file_to_image(game->mlx, "textures/player.xpm", &w, &h);
+	game->img_exit = mlx_xpm_file_to_image(game->mlx, "textures/exit.xpm", &w, &h);
+	game->img_collectible = mlx_xpm_file_to_image(game->mlx, "textures/collectible.xpm", &w, &h);
 }
 
 static void	draw_tile(t_game *game, int x, int y)
 {
-	char c = game->map[y][x];
-	void *img;
+	char	c = game->map[y][x];
+	void	*img = NULL;
 
 	if (c == '1')
 		img = game->img_wall;
@@ -41,15 +39,14 @@ static void	draw_tile(t_game *game, int x, int y)
 		img = game->img_exit;
 	else if (c == 'C')
 		img = game->img_collectible;
-	else
-		img = NULL;
 	if (img)
-		mlx_put_image_to_window(game->mlx, game->win, img, x * 64, y * 64);
+		mlx_put_image_to_window(game->mlx, game->win, img, x * TILE_SIZE, y * TILE_SIZE);
 }
 
 void	render_map(t_game *game)
 {
-	int x, y;
+	int	x;
+	int	y;
 
 	load_textures(game);
 	y = 0;
@@ -64,3 +61,4 @@ void	render_map(t_game *game)
 		y++;
 	}
 }
+

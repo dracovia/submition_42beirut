@@ -12,56 +12,36 @@
 
 #include "so_long.h"
 
-static void	check_walls(t_game *game)
+static void	check_top_bottom_walls(t_game *game)
 {
-	int x, y;
+	int x;
+
+	x = 0;
+	while (x < game->width)
+	{
+		if (game->map[0][x] != '1' || game->map[game->height - 1][x] != '1')
+			error_and_exit("Map must be enclosed by walls");
+		x++;
+	}
+}
+
+static void	check_side_walls(t_game *game)
+{
+	int y;
 
 	y = 0;
 	while (y < game->height)
 	{
-		x = 0;
-		while (x < game->width)
-		{
-			if ((y == 0 || y == game->height - 1 || x == 0 || x == game->width - 1)
-				&& game->map[y][x] != '1')
-				error_and_exit("Map must be enclosed by walls");
-			x++;
-		}
+		if (game->map[y][0] != '1' || game->map[y][game->width - 1] != '1')
+			error_and_exit("Map must be enclosed by walls");
 		y++;
 	}
 }
-static void	count_elements(t_game *game, int *player_count, int *exit_count, int *collect_count)
-{
-	int x, y;
-	char c;
 
-	*player_count = 0;
-	*exit_count = 0;
-	*collect_count = 0;
-	y = 0;
-	while (y < game->height)
-	{
-		x = 0;
-		while (x < game->width)
-		{
-			c = game->map[y][x];
-			if (c != '0' && c != '1' && c != 'P' && c != 'E' && c != 'C')
-				error_and_exit("Invalid map character");
-			if (c == 'P')
-				(*player_count)++;
-			else if (c == 'E')
-				(*exit_count)++;
-			else if (c == 'C')
-				(*collect_count)++;
-			x++;
-		}
-		y++;
-	}
-}
 static void	check_rectangular(t_game *game)
 {
-	int	y;
-	int	len;
+	int y;
+	int len;
 
 	y = 0;
 	while (y < game->height)
@@ -74,9 +54,11 @@ static void	check_rectangular(t_game *game)
 		y++;
 	}
 }
-static void	set_player_position(t_game *game)
+
+static void	count_map_elements(t_game *game, int *p, int *e, int *c)
 {
-	int y, x;
+	int x, y;
+	char ch;
 
 	y = 0;
 	while (y < game->height)
@@ -84,12 +66,15 @@ static void	set_player_position(t_game *game)
 		x = 0;
 		while (x < game->width)
 		{
-			if (game->map[y][x] == 'P')
-			{
-				game->player.x = x;
-				game->player.y = y;
-				return;
-			}
+			ch = game->map[y][x];
+			if (ch != '0' && ch != '1' && ch != 'P' && ch != 'E' && ch != 'C')
+				error_and_exit("Invalid map character");
+			if (ch == 'P')
+				(*p)++;
+			else if (ch == 'E')
+				(*e)++;
+			else if (ch == 'C')
+				(*c)++;
 			x++;
 		}
 		y++;
@@ -98,18 +83,15 @@ static void	set_player_position(t_game *game)
 
 int	validate_map(t_game *game)
 {
-	int player_count;
-	int exit_count;
-	int collect_count;
+	int p, e, c;
 
 	check_rectangular(game);
-	check_walls(game);
-	count_elements(game, &player_count, &exit_count, &collect_count);
-
-	if (player_count != 1 || exit_count < 1 || collect_count < 1)
+	check_top_bottom_walls(game);
+	check_side_walls(game);
+	count_map_elements(game, &p, &e, &c);
+	if (p != 1 || e < 1 || c < 1)
 		error_and_exit("Map must contain 1 player, at least 1 exit, and 1 collectible");
-
-	set_player_position(game);
-	game->collectibles = collect_count;
+	game->collectibles = c;
 	return (1);
 }
+

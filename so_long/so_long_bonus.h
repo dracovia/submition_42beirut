@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   so_long_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/02 18:26:48 by mfassad           #+#    #+#             */
-/*   Updated: 2025/08/04 17:29:31 by mfassad          ###   ########.fr       */
+/*   Created: 2025/08/06 14:36:55 by mfassad           #+#    #+#             */
+/*   Updated: 2025/08/06 14:36:55 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,20 @@
 # include "mlx.h"
 
 # define TILE_SIZE 64
+# define ANIM_FRAMES 4
 
-typedef struct s_pos
-{
+typedef struct s_pos {
 	int	x;
 	int	y;
 }	t_pos;
 
-typedef struct s_game
-{
+typedef struct s_enemy {
+	int		x;
+	int		y;
+	int		dir; // 1 or -1 for patrol direction
+}	t_enemy;
+
+typedef struct s_game {
 	void	*mlx;
 	void	*win;
 	char	**map;
@@ -38,11 +43,20 @@ typedef struct s_game
 	t_pos	player;
 	t_pos	exit;
 
+	// Images (arrays for animation frames)
 	void	*img_wall;
 	void	*img_floor;
-	void	*img_player;
+	void	*img_player[ANIM_FRAMES];
 	void	*img_exit;
-	void	*img_collectible;
+	void	*img_collectible[ANIM_FRAMES];
+	void	*img_enemy[ANIM_FRAMES];
+
+	// Animation tracking
+	int		frame;
+
+	// Enemies
+	t_enemy	*enemies;
+	int		enemy_count;
 }	t_game;
 
 int		load_map(char *filename, t_game *game);
@@ -54,5 +68,7 @@ void	error_and_exit(char *msg);
 void	ft_putnbr_fd(int n, int fd);
 size_t	ft_strlen(const char *s);
 
-#endif
+int		enemy_move(t_game *game);
+void	display_moves(t_game *game);
 
+#endif
