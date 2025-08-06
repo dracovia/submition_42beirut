@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 18:40:48 by mfassad           #+#    #+#             */
-/*   Updated: 2025/08/04 17:30:29 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/08/06 17:04:32 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	load_map(char *filename, t_game *game)
 	int		i;
 	int		lines;
 	char	**map;
+	char	*line;
+	size_t	len;
 
 	lines = get_line_count(filename);
 	map = malloc(sizeof(char *) * (lines + 1));
@@ -50,15 +52,19 @@ int	load_map(char *filename, t_game *game)
 	i = 0;
 	while (i < lines)
 	{
-		map[i] = get_next_line(fd);
-		if (!map[i])
+		line = get_next_line(fd);
+		if (!line)
 			error_and_exit("Error reading map");
-		i++;
+		len = ft_strlen(line);
+		if (len > 0 && line[len - 1] == '\n')
+			line[len - 1] = '\0';
+		map[i++] = line;
 	}
 	map[i] = NULL;
 	close(fd);
 	game->map = map;
 	game->height = lines;
-	game->width = ft_strlen(map[0]);
+	game->width = ft_strlen(map[0]);  // assumes rectangular (checked later)
 	return (1);
 }
+

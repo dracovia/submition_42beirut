@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 18:29:34 by mfassad           #+#    #+#             */
-/*   Updated: 2025/08/04 17:28:06 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/08/06 17:29:43 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,13 @@ void	ft_putnbr_fd(int n, int fd)
 		ft_putnbr_fd(nb / 10, fd);
 	c = (nb % 10) + '0';
 	write(fd, &c, 1);
+}
+
+void ft_putstr_fd(char *s, int fd)
+{
+    if (!s)
+        return;
+    while (*s)
+        write(fd, s++, 1);
 }
 

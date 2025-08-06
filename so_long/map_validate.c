@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 18:54:25 by mfassad           #+#    #+#             */
-/*   Updated: 2025/08/04 17:42:49 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/08/06 17:18:40 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,15 +83,19 @@ static void	count_map_elements(t_game *game, int *p, int *e, int *c)
 
 int	validate_map(t_game *game)
 {
-	int p, e, c;
+    int p = 0, e = 0, c = 0;
 
-	check_rectangular(game);
-	check_top_bottom_walls(game);
-	check_side_walls(game);
-	count_map_elements(game, &p, &e, &c);
-	if (p != 1 || e < 1 || c < 1)
-		error_and_exit("Map must contain 1 player, at least 1 exit, and 1 collectible");
-	game->collectibles = c;
-	return (1);
+    check_rectangular(game);
+    check_top_bottom_walls(game);
+    check_side_walls(game);
+    count_map_elements(game, &p, &e, &c);
+
+
+    if (p != 1 || e < 1 || c < 1)
+        error_and_exit("Map must contain 1 player, at least 1 exit, and 1 collectible");
+
+    game->collectibles = c;
+    return 1;
 }
+
 

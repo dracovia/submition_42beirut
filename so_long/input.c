@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 10:23:10 by mfassad           #+#    #+#             */
-/*   Updated: 2025/08/03 10:23:10 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/08/06 17:32:50 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,15 @@ static void	move_player(t_game *game, int new_x, int new_y)
 
 	if (tile == '1')
 		return; // Wall, can't move
+
 	check_tile_action(game, tile);
+
 	update_player_position(game, new_x, new_y);
+
 	game->moves++;
 	ft_putnbr_fd(game->moves, 1);
 	write(1, "\n", 1);
+
 	render_map(game);
 }
 

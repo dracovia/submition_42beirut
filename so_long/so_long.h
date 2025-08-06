@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 18:26:48 by mfassad           #+#    #+#             */
-/*   Updated: 2025/08/04 17:29:31 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/08/06 17:35:04 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,9 @@ int		close_game(t_game *game);
 void	error_and_exit(char *msg);
 void	ft_putnbr_fd(int n, int fd);
 size_t	ft_strlen(const char *s);
+void ft_putstr_fd(char *s, int fd);
+void	load_textures(t_game *game);
+
 
 #endif
 

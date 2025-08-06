@@ -6,13 +6,13 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 10:20:04 by mfassad           #+#    #+#             */
-/*   Updated: 2025/08/03 10:20:04 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/08/06 17:36:07 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static void	load_textures(t_game *game)
+ void	load_textures(t_game *game)
 {
 	int w;
 	int h;
