@@ -33,21 +33,17 @@ static int	get_line_count(char *filename)
 	return (count);
 }
 
-int	load_map(char *filename, t_game *game)
+static char	**read_map_file(char *filename, int lines)
 {
 	int		fd;
 	int		i;
-	int		lines;
 	char	**map;
 	char	*line;
 	size_t	len;
 
-	lines = get_line_count(filename);
-	map = malloc(sizeof(char *) * (lines + 1));
-	if (!map)
+	if (!(map = malloc(sizeof(char *) * (lines + 1))))
 		error_and_exit("Memory allocation failed");
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
+	if ((fd = open(filename, O_RDONLY)) < 0)
 		error_and_exit("Failed to open map file");
 	i = 0;
 	while (i < lines)
@@ -62,9 +58,25 @@ int	load_map(char *filename, t_game *game)
 	}
 	map[i] = NULL;
 	close(fd);
+	return (map);
+}
+
+
+int	load_map(char *filename, t_game *game)
+{
+	int		lines;
+	char	**map;
+
+	lines = get_line_count(filename);
+	map = read_map_file(filename, lines);
 	game->map = map;
 	game->height = lines;
-	game->width = ft_strlen(map[0]);  // assumes rectangular (checked later)
+	game->width = ft_strlen(map[0]);
 	return (1);
 }
+
+
+
+
+
 
