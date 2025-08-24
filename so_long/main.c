@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 10:26:02 by mfassad           #+#    #+#             */
-/*   Updated: 2025/08/06 17:20:53 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/08/24 16:26:34 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	find_player_position(t_game *game)
 {
-	int x, y;
+	int	x;
+	int	y;
 
 	y = 0;
 	while (y < game->height)
@@ -26,21 +27,31 @@ void	find_player_position(t_game *game)
 			{
 				game->player.x = x;
 				game->player.y = y;
-				return;
+				return ;
 			}
 			x++;
 		}
 		y++;
 	}
-	error_and_exit("Player position not found in map");
+	error_and_exit("Player position not found in map",game);
 }
 
 int main(int argc, char **argv)
 {
     t_game game;
 
+    game.moves = 0;
+    game.mlx = NULL;
+    game.win = NULL;
+    game.map = NULL;
+    game.img_wall = NULL;
+    game.img_floor = NULL;
+    game.img_player = NULL;
+    game.img_exit = NULL;
+    game.img_collectible = NULL;
+
     if (argc != 2)
-        error_and_exit("Usage: ./so_long map.ber");
+        error_and_exit("Usage: ./so_long map.ber", NULL);
 
     load_map(argv[1], &game);
     validate_map(&game);
@@ -48,19 +59,24 @@ int main(int argc, char **argv)
 
     game.mlx = mlx_init();
     if (!game.mlx)
-        error_and_exit("Failed to initialize MLX");
+        error_and_exit("Failed to initialize MLX", &game);
 
     game.win = mlx_new_window(game.mlx,
         game.width * TILE_SIZE, game.height * TILE_SIZE, "so_long");
-
     if (!game.win)
-        error_and_exit("Failed to create window");
+        error_and_exit("Failed to create window", &game);
 
-    load_textures(&game);  // ✅ Call once here
+    load_textures(&game);
     render_map(&game);
+
     mlx_key_hook(game.win, handle_key, &game);
     mlx_hook(game.win, 17, 0, close_game, &game);
     mlx_loop(game.mlx);
-    return (0);
+
+    cleanup_game(&game); // never reached, but safe
+    return 0;
 }
+
+
+
 

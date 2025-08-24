@@ -6,53 +6,68 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 10:23:10 by mfassad           #+#    #+#             */
-/*   Updated: 2025/08/06 17:32:50 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/08/24 15:54:53 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static void	update_player_position(t_game *game, int new_x, int new_y)
+
+
+static void update_player_position(t_game *game, int new_x, int new_y)
 {
-	game->map[game->player.y][game->player.x] = '0';
-	game->map[new_y][new_x] = 'P';
-	game->player.x = new_x;
-	game->player.y = new_y;
+    // Restore the previous tile
+    game->map[game->player.y][game->player.x] = game->under_player;
+
+    // Check what’s under the new tile
+    char next_tile = game->map[new_y][new_x];
+
+    // If it’s a collectible, remove it
+    if (next_tile == 'C')
+        game->collectibles--;
+
+    // Save the tile under the player (after removing collectible)
+    game->under_player = (next_tile == 'C' || next_tile == '0') ? '0' : next_tile;
+
+    // Move the player
+    game->map[new_y][new_x] = 'P';
+    game->player.x = new_x;
+    game->player.y = new_y;
 }
 
-static void	check_tile_action(t_game *game, char tile)
+static void check_exit(t_game *game, char tile)
 {
-	if (tile == 'C')
-		game->collectibles--;
-	else if (tile == 'E' && game->collectibles == 0)
-	{
-		mlx_destroy_window(game->mlx, game->win);
-		exit(0); // Win condition
-	}
+    if (tile == 'E' && game->collectibles == 0)
+    {
+        cleanup_game(game);
+        exit(0);
+    }
 }
 
-static void	move_player(t_game *game, int new_x, int new_y)
+
+void move_player(t_game *game, int new_x, int new_y)
 {
-	char tile = game->map[new_y][new_x];
+    char tile = game->map[new_y][new_x];
+    if (tile == '1')
+        return;
 
-	if (tile == '1')
-		return; // Wall, can't move
+    update_player_position(game, new_x, new_y);
+    check_exit(game, tile);
 
-	check_tile_action(game, tile);
+    game->moves++;
+    ft_putnbr_fd(game->moves, 1);
+    write(1, "\n", 1);
 
-	update_player_position(game, new_x, new_y);
-
-	game->moves++;
-	ft_putnbr_fd(game->moves, 1);
-	write(1, "\n", 1);
-
-	render_map(game);
+    render_map(game);
 }
+
+
+
 
 int	handle_key(int keycode, t_game *game)
 {
-	if (keycode == 65307)
-		close_game(game);
+	if (keycode == 65307) // ESC
+		return (close_game(game), 0);
 	else if (keycode == 'w' || keycode == 65362)
 		move_player(game, game->player.x, game->player.y - 1);
 	else if (keycode == 's' || keycode == 65364)
@@ -64,10 +79,11 @@ int	handle_key(int keycode, t_game *game)
 	return (0);
 }
 
-int	close_game(t_game *game)
+int close_game(t_game *game)
 {
-	mlx_destroy_window(game->mlx, game->win);
-	exit(0);
-	return (0);
+    cleanup_game(game);
+    exit(0);
 }
+
+
 

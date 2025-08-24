@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 18:26:48 by mfassad           #+#    #+#             */
-/*   Updated: 2025/08/06 17:35:04 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/08/24 16:21:39 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_game
 	void	*img_player;
 	void	*img_exit;
 	void	*img_collectible;
+	char	 under_player;
 }	t_game;
 
 int		load_map(char *filename, t_game *game);
@@ -50,11 +51,15 @@ int		validate_map(t_game *game);
 void	render_map(t_game *game);
 int		handle_key(int keycode, t_game *game);
 int		close_game(t_game *game);
-void	error_and_exit(char *msg);
+void error_and_exit(char *msg, struct s_game *game);
 void	ft_putnbr_fd(int n, int fd);
 size_t	ft_strlen(const char *s);
 void ft_putstr_fd(char *s, int fd);
 void	load_textures(t_game *game);
+void draw_tile(t_game *game, int x, int y);
+void free_map(t_game *game);
+void destroy_images(t_game *game);
+void cleanup_game(t_game *game);
 
 
 #endif
