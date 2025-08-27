@@ -6,12 +6,13 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 18:29:34 by mfassad           #+#    #+#             */
-/*   Updated: 2025/08/24 16:29:35 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/08/27 17:22:33 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
+#include "so_long.h"
 
 static size_t	ft_strlen(const char *s)
 {
@@ -23,13 +24,16 @@ static size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-void	error_and_exit(char *msg)
+void	error_and_exit(char *msg, t_game *game)
 {
 	write(2, "Error\n", 6);
 	write(2, msg, ft_strlen(msg));
 	write(2, "\n", 1);
+	if (game)
+		cleanup_game(game);
 	exit(1);
 }
+
 
 void	ft_putnbr_fd(int n, int fd)
 {
@@ -48,11 +52,11 @@ void	ft_putnbr_fd(int n, int fd)
 	write(fd, &c, 1);
 }
 
-void ft_putstr_fd(char *s, int fd)
+void	ft_putstr_fd(char *s, int fd)
 {
-    if (!s)
-        return;
-    while (*s)
-        write(fd, s++, 1);
+	if (!s)
+		return ;
+	while (*s)
+		write(fd, s++, 1);
 }
 

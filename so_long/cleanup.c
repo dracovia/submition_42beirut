@@ -6,19 +6,19 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 15:53:51 by mfassad           #+#    #+#             */
-/*   Updated: 2025/08/24 15:53:55 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/08/27 16:28:44 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 #include <stdlib.h>
 
-void free_map(t_game *game)
+ void free_map(t_game *game)
 {
+    int i = 0;
     if (game->map)
     {
-        int i = 0;
-        while (i < game->height)
+        while (game->map[i])
         {
             free(game->map[i]);
             i++;
@@ -48,6 +48,17 @@ void cleanup_game(t_game *game)
 {
     destroy_images(game);
     free_map(game);
+
     if (game->mlx && game->win)
         mlx_destroy_window(game->mlx, game->win);
+
+    if (game->mlx)
+    {
+        mlx_destroy_display(game->mlx);
+        free(game->mlx);
+        game->mlx = NULL;
+    }
 }
+
+
+
