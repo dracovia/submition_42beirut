@@ -6,11 +6,12 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 10:26:02 by mfassad           #+#    #+#             */
-/*   Updated: 2025/08/27 17:35:07 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/08/28 15:40:26 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+#include "get_next_line.h"
 
 void	find_player_position(t_game *game)
 {
@@ -27,13 +28,14 @@ void	find_player_position(t_game *game)
 			{
 				game->player.x = x;
 				game->player.y = y;
+				game->under_player = '0';
 				return ;
 			}
 			x++;
 		}
 		y++;
 	}
-	error_and_exit("ERROR: Player position not found in map", game);
+	error_and_exit("Error\nPlayer position not found in map", game);
 }
 
 static	void	init_game_struct(t_game *game)
@@ -53,11 +55,11 @@ static	void	setup_window(t_game *game)
 {
 	game->mlx = mlx_init();
 	if (!game->mlx)
-		error_and_exit("ERROR: Failed to initialize MLX", game);
+		error_and_exit("Failed to initialize MLX", game);
 	game->win = mlx_new_window(game->mlx,
 			game->width * TILE_SIZE, game->height * TILE_SIZE, "so_long");
 	if (!game->win)
-		error_and_exit("ERROR: Failed to create window", game);
+		error_and_exit("Failed to create window", game);
 }
 
 static	void	start_game_loop(t_game *game)
@@ -76,6 +78,9 @@ int	main(int argc, char **argv)
 	init_game_struct(&game);
 	if (argc != 2)
 		error_and_exit("Usage: ./so_long map.ber", NULL);
+	if (!ft_strnstr(&argv[1][ft_strlen(argv[1]) - 4], ".ber", 4))
+		error_and_exit
+		("Map file extention is wrong (It should be .ber).", &game);
 	load_map(argv[1], &game);
 	validate_map(&game);
 	find_player_position(&game);
@@ -84,8 +89,3 @@ int	main(int argc, char **argv)
 	cleanup_game(&game);
 	return (0);
 }
-
-
-
-
-

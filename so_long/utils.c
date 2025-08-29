@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 18:29:34 by mfassad           #+#    #+#             */
-/*   Updated: 2025/08/27 17:22:33 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/08/28 15:29:41 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	error_and_exit(char *msg, t_game *game)
 	exit(1);
 }
 
-
 void	ft_putnbr_fd(int n, int fd)
 {
 	long	nb;
@@ -59,4 +58,3 @@ void	ft_putstr_fd(char *s, int fd)
 	while (*s)
 		write(fd, s++, 1);
 }
-

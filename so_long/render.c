@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 10:20:04 by mfassad           #+#    #+#             */
-/*   Updated: 2025/08/27 17:19:45 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/08/28 14:41:37 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	render_map(t_game *game)
 	y = 0;
 	destroy_images(game);
 	load_textures(game);
-
 	while (y < game->height)
 	{
 		x = 0;
@@ -54,6 +53,3 @@ void	render_map(t_game *game)
 		y++;
 	}
 }
-
-
-

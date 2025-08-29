@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 14:49:52 by mfassad           #+#    #+#             */
-/*   Updated: 2025/08/27 17:21:29 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/08/28 14:50:31 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,3 @@ void	load_textures(t_game *game)
 		|| !game->img_exit || !game->img_collectible)
 		error_and_exit("Failed to load textures", game);
 }
-

@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 18:26:48 by mfassad           #+#    #+#             */
-/*   Updated: 2025/08/27 17:20:28 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/08/29 13:21:07 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	destroy_images(t_game *game);
 void	cleanup_game(t_game *game);
 void	destroy_images(t_game *game);
 char	**read_map_file(char *filename, int lines, t_game *game);
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
+int		check_trapped(t_game *game, int x, int y);
+void	check_reachability(t_game *game, int px, int py);
 
 #endif
-

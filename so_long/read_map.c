@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 16:58:10 by mfassad           #+#    #+#             */
-/*   Updated: 2025/08/27 17:09:41 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/08/28 14:50:17 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static	int	open_map_file(char *filename, t_game *game)
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		error_and_exit("ERROR: Failed to open map file", game);
+		error_and_exit("Failed to open map file", game);
 	return (fd);
 }
 
@@ -29,7 +29,7 @@ static char	**allocate_map(int lines, t_game *game)
 
 	map = malloc(sizeof(char *) * (lines + 1));
 	if (!map)
-		error_and_exit("ERROR: Memory allocation failed", game);
+		error_and_exit("Memory allocation failed", game);
 	return (map);
 }
 
@@ -51,7 +51,7 @@ static	char	*read_map_line(int fd, t_game *game, char **map, int i)
 	{
 		free_partial_map(map, i);
 		close(fd);
-		error_and_exit("Error reading map", game);
+		error_and_exit("reading map", game);
 	}
 	len = ft_strlen(line);
 	if (len > 0 && line[len - 1] == '\n')

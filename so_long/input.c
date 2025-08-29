@@ -6,13 +6,11 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 10:23:10 by mfassad           #+#    #+#             */
-/*   Updated: 2025/08/27 16:53:45 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/08/28 14:40:35 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-
 
 static	void	update_player_position(t_game *game, int new_x, int new_y)
 {
@@ -39,7 +37,6 @@ static	void	check_exit(t_game *game, char tile)
 		exit(0);
 	}
 }
-
 
 void	move_player(t_game *game, int new_x, int new_y)
 {
@@ -76,6 +73,3 @@ int	close_game(t_game *game)
 	cleanup_game(game);
 	exit(0);
 }
-
-
-
