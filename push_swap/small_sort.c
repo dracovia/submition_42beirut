@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 21:23:46 by mfassad           #+#    #+#             */
-/*   Updated: 2025/08/18 21:23:46 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/08/31 15:55:50 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,38 +21,58 @@ static void	sort_two(t_stack *a)
 
 static void	sort_three(t_stack *a)
 {
-	int x = a->top->val;
-	int y = a->top->next->val;
-	int z = a->bottom->val;
+	int	x;
+	int	y;
+	int	z;
 
+	x = a->top->val;
+	y = a->top->next->val;
+	z = a->bottom->val;
 	if (x > y && y < z && x < z)
 		sa(a);
 	else if (x > y && y > z)
-	{ sa(a); rra(a); }
+	{
+		sa(a);
+		rra(a);
+	}
 	else if (x > y && y < z && x > z)
 		ra(a);
 	else if (x < y && y > z && x < z)
-	{ sa(a); ra(a); }
+	{
+		sa(a);
+		ra(a);
+	}
 	else if (x < y && y > z && x > z)
 		rra(a);
 }
 
 static void	push_smallest_to_b(t_stack *a, t_stack *b)
 {
-	t_node	*cur = a->top;
-	int		pos = 0, min_pos = 0, min_val = cur->val;
+	t_node	*cur;
+	int		pos;
+	int		min_pos;
+	int		min_val;
 
+	cur = a->top;
+	pos = 0;
+	min_pos = 0;
+	min_val = cur->val;
 	while (cur)
 	{
 		if (cur->val < min_val)
-		{ min_val = cur->val; min_pos = pos; }
+		{
+			min_val = cur->val;
+			min_pos = pos;
+		}
 		cur = cur->next;
 		pos++;
 	}
 	if (min_pos <= a->size / 2)
-		while (min_pos--) ra(a);
+		while (min_pos--)
+			ra(a);
 	else
-		while (min_pos++ < a->size) rra(a);
+		while (min_pos++ < a->size)
+			rra(a);
 	pb(a, b);
 }
 
