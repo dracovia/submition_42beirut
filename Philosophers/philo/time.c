@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 22:37:03 by mfassad           #+#    #+#             */
-/*   Updated: 2026/01/23 22:13:34 by mfassad          ###   ########.fr       */
+/*   Updated: 2026/02/01 12:47:57 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,25 @@ long	elapsed_time(t_data *data)
 {
 	return (get_timestamp_ms() - data->start_time);
 }
+int 	check_stop(t_data *data)
+{
+	int		stop;
+
+	pthread_mutex_lock(&data->stop_mutex);
+	stop = data->stop;
+	pthread_mutex_unlock(&data->stop_mutex);
+	if (stop)
+		return 1;
+	return 0;
+}
 void	smart_sleep(long duration, t_data *data)
 {
 	long	start;
-	int		stop;
 
 	start = get_timestamp_ms();
-	while (1)
+	while (!check_stop(data))
 	{
-		pthread_mutex_lock(&data->stop_mutex);
-		stop = data->stop;
-		pthread_mutex_unlock(&data->stop_mutex);
-		if (stop || get_timestamp_ms() - start >= duration)
+		if (get_timestamp_ms() - start >= duration)
 			break ;
 		usleep(500);
 	}

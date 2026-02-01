@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 22:41:41 by mfassad           #+#    #+#             */
-/*   Updated: 2026/01/26 09:02:58 by mfassad          ###   ########.fr       */
+/*   Updated: 2026/02/01 14:34:59 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,14 @@ static void take_forks(t_philo *p)
         pthread_mutex_lock(p->right_fork);
         print_state(p, "has taken a fork");
         pthread_mutex_lock(p->left_fork);
-        print_state(p, "has taken a fork");
     }
     else
     {
         pthread_mutex_lock(p->left_fork);
         print_state(p, "has taken a fork");
         pthread_mutex_lock(p->right_fork);
-        print_state(p, "has taken a fork");
     }
+    print_state(p, "has taken a fork");
 }
 
 static void eat(t_philo *p)
@@ -68,6 +67,8 @@ void *philo_routine(void *arg)
     t_philo *p;
 
     p = (t_philo *)arg;
+    if (p->id % 2)
+        usleep(p->data->time_eat * 1000 / 2);
     if (p->data->philo_count == 1)
     {
         pthread_mutex_lock(p->left_fork);
@@ -83,6 +84,7 @@ void *philo_routine(void *arg)
         print_state(p, "is sleeping");
         smart_sleep(p->data->time_sleep, p->data);
         print_state(p, "is thinking");
+        usleep(1000);
     }
     return (NULL);
 }
