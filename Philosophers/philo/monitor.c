@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 22:42:43 by mfassad           #+#    #+#             */
-/*   Updated: 2026/02/01 15:09:27 by mfassad          ###   ########.fr       */
+/*   Updated: 2026/02/08 14:54:00 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static void	set_stop(t_data *data)
 	pthread_mutex_unlock(&data->stop_mutex);
 }
 
-
 void	monitor_philosophers(t_data *data, t_philo *philos)
 {
 	int	i;
@@ -67,4 +66,3 @@ void	monitor_philosophers(t_data *data, t_philo *philos)
 		usleep(200);
 	}
 }
-

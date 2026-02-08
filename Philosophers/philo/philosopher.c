@@ -6,18 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 22:40:18 by mfassad           #+#    #+#             */
-/*   Updated: 2026/01/23 20:47:56 by mfassad          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*   philosopher.c                                                            */
-/*                                                                            */
-/*   Responsibilities:                                                        */
-/*   - Initialize philosopher structures                                      */
-/*   - Assign forks and IDs                                                   */
-/*   - Set initial state and timestamps                                       */
+/*   Updated: 2026/02/08 15:45:56 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +32,3 @@ int	init_philosophers(t_data *data, t_philo *philos)
 	}
 	return (0);
 }
-

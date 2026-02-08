@@ -6,19 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 22:37:03 by mfassad           #+#    #+#             */
-/*   Updated: 2026/02/01 12:47:57 by mfassad          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-
-/* ************************************************************************** */
-/*                                                                            */
-/*   time.c                                                                   */
-/*                                                                            */
-/*   Responsibilities:                                                        */
-/*   - Provide timestamp utilities                                            */
-/*   - Calculate elapsed time in milliseconds                                 */
-/*   - Implement precise sleeping logic                                       */
+/*   Updated: 2026/02/08 14:55:30 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +24,8 @@ long	elapsed_time(t_data *data)
 {
 	return (get_timestamp_ms() - data->start_time);
 }
-int 	check_stop(t_data *data)
+
+int	check_stop(t_data *data)
 {
 	int		stop;
 
@@ -44,9 +33,10 @@ int 	check_stop(t_data *data)
 	stop = data->stop;
 	pthread_mutex_unlock(&data->stop_mutex);
 	if (stop)
-		return 1;
-	return 0;
+		return (1);
+	return (0);
 }
+
 void	smart_sleep(long duration, t_data *data)
 {
 	long	start;

@@ -6,24 +6,12 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 17:52:17 by mfassad           #+#    #+#             */
-/*   Updated: 2026/01/23 22:21:04 by mfassad          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*   philo.h                                                                  */
-/*                                                                            */
-/*   Responsibilities:                                                        */
-/*   - Define all structs used in the project                                 */
-/*   - Declare all shared function prototypes                                 */
-/*   - Include required libraries (pthread, sys/time, stdio, etc.)            */
-/*   - Centralize configuration and shared constants                           */
+/*   Updated: 2026/02/08 14:54:41 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
-#define PHILO_H
+# define PHILO_H
 
 # include <stdio.h>
 # include <stdlib.h>
