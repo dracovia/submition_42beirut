@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 18:26:48 by mfassad           #+#    #+#             */
-/*   Updated: 2025/08/29 13:21:07 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/09/02 13:46:21 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
-# include "mlx.h"
+# include "minilibx-linux/mlx.h"
 
 # define TILE_SIZE 64
 

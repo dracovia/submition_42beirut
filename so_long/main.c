@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 10:26:02 by mfassad           #+#    #+#             */
-/*   Updated: 2025/08/28 15:40:26 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/09/02 13:58:32 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ int	main(int argc, char **argv)
 		error_and_exit
 		("Map file extention is wrong (It should be .ber).", &game);
 	load_map(argv[1], &game);
-	validate_map(&game);
 	find_player_position(&game);
+	validate_map(&game);
 	setup_window(&game);
 	start_game_loop(&game);
 	cleanup_game(&game);

@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 12:33:02 by mfassad           #+#    #+#             */
-/*   Updated: 2025/08/29 13:23:55 by mfassad          ###   ########.fr       */
+/*   Updated: 2025/09/02 14:07:28 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,19 @@
 
 int	check_trapped(t_game *game, int x, int y)
 {
+	if (x == 0 || y == 0 || x == game->width - 1 || y == game->height - 1)
+		return (1);
 	if (game->map[y - 1][x] == '1' &&
 		game->map[y + 1][x] == '1' &&
-		game->map[y][x + 1] == '1' &&
-		game->map[y][x - 1] == '1')
+		game->map[y][x - 1] == '1' &&
+		game->map[y][x + 1] == '1')
 	{
 		if (game->map[y][x] == 'P')
-			error_and_exit("player is trapped", game);
+			error_and_exit("Player is trapped", game);
 		if (game->map[y][x] == 'E')
-			error_and_exit("exit is trapped", game);
+			error_and_exit("Exit is trapped", game);
 		if (game->map[y][x] == 'C')
-			error_and_exit("collectible is trapped", game);
+			error_and_exit("Collectible is trapped", game);
 		return (0);
 	}
 	return (1);
@@ -44,13 +46,15 @@ int	**alloc_2d(int h, int w)
 	{
 		arr[y] = malloc(sizeof(int) * w);
 		if (!arr[y])
+		{
+			while (--y >= 0)
+				free(arr[y]);
+			free(arr);
 			return (NULL);
+		}
 		x = 0;
 		while (x < w)
-		{
-			arr[y][x] = 0;
-			x++;
-		}
+			arr[y][x++] = 0;
 		y++;
 	}
 	return (arr);
