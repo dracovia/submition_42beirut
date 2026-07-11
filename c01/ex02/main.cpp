@@ -5,23 +5,30 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/09 21:17:38 by mfassad           #+#    #+#             */
-/*   Updated: 2026/07/11 12:55:35 by mfassad          ###   ########.fr       */
+/*   Created: 2026/07/11 16:02:52 by mfassad           #+#    #+#             */
+/*   Updated: 2026/07/11 16:16:41 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Zombie.hpp"
+#include <iostream>
+#include <string>
 
 int main()
 {
-	Zombie* heapZombie;
+	std::string str = "HI THIS IS BRAIN";
 
-	heapZombie = newZombie("HeapZombie");
-	heapZombie->announce();
+	std::string* stringPTR = &str;
+	std::string& stringREF = str;
 
-	randomChump("StackZombie");
+	std::cout << "Memory address of str:       " << &str << std::endl;
+	std::cout << "Memory address held by PTR:  " << stringPTR << std::endl;
+	std::cout << "Memory address held by REF:  " << &stringREF << std::endl;
 
-	delete heapZombie;
+	std::cout << std::endl;
+
+	std::cout << "Value of str:                " << str << std::endl;
+	std::cout << "Value pointed to by PTR:     " << *stringPTR << std::endl;
+	std::cout << "Value pointed to by REF:     " << stringREF << std::endl;
 
 	return 0;
 }
