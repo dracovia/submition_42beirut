@@ -6,7 +6,7 @@
 #    By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/22 21:34:44 by mfassad           #+#    #+#              #
-#    Updated: 2026/07/24 10:13:37 by mfassad          ###   ########.fr        #
+#    Updated: 2026/07/24 11:22:40 by mfassad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 SRCS = main.cpp \
        Animal.cpp \
+       Brain.cpp \
        Dog.cpp \
        Cat.cpp \
        WrongAnimal.cpp \

@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/22 21:38:11 by mfassad           #+#    #+#             */
-/*   Updated: 2026/07/22 21:52:32 by mfassad          ###   ########.fr       */
+/*   Updated: 2026/07/24 10:09:11 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,13 @@
 
 class Dog : public Animal
 {
-    public:
-        Dog();
-        ~Dog();
-        void makeSound();
+public:
+    Dog();
+    Dog(const Dog& other);
+    Dog& operator=(const Dog& other);
+    virtual ~Dog();
+
+    virtual void makeSound() const;
 };
 
 #endif
