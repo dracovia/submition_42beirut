@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 13:37:13 by mfassad           #+#    #+#             */
-/*   Updated: 2026/08/10 16:42:10 by mfassad          ###   ########.fr       */
+/*   Updated: 2026/08/12 17:44:00 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,22 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <get_next_line.h>
 # include <libft.h>
+
+typedef enum e_line_type
+{
+	LINE_EMPTY,
+	LINE_NO,
+	LINE_SO,
+	LINE_WE,
+	LINE_EA,
+	LINE_F,
+	LINE_C,
+	LINE_MAP,
+	LINE_INVALID
+}	t_line_type;
+
 typedef struct s_color
 {
 	int	r;
@@ -59,4 +74,13 @@ void	init_config(t_config *config);
 int		validate_filename(char *filename);
 int		parse_file(char *filename, t_config *config);
 
+t_line_type	identify_line(char *line);
+
+int	parse_texture(char *line, t_line_type type, t_config *config);
+void	free_config(t_config *config);
+
+char	**read_file(char *filename);
+void	free_lines(char **lines);
+
+int	parse_color(char *line, t_line_type type, t_config *config);
 #endif
