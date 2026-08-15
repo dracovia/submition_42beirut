@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 13:37:13 by mfassad           #+#    #+#             */
-/*   Updated: 2026/08/12 17:44:00 by mfassad          ###   ########.fr       */
+/*   Updated: 2026/08/15 17:44:18 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@ typedef enum e_line_type
 	LINE_MAP,
 	LINE_INVALID
 }	t_line_type;
+
+typedef enum e_parse_state
+{
+	PARSE_CONFIG,
+	PARSE_MAP
+}	t_parse_state;
 
 typedef struct s_color
 {
@@ -83,4 +89,9 @@ char	**read_file(char *filename);
 void	free_lines(char **lines);
 
 int	parse_color(char *line, t_line_type type, t_config *config);
+int	config_complete(t_config *config);
+
+int	store_map(char **lines, int start, t_config *config);
+
+
 #endif
