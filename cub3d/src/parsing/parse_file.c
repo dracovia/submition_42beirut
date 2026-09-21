@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 15:22:32 by mfassad           #+#    #+#             */
-/*   Updated: 2026/08/15 17:45:05 by mfassad          ###   ########.fr       */
+/*   Updated: 2026/09/21 14:35:35 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,3 +113,17 @@ int	parse_file(char *filename, t_config *config)
 	free_lines(lines);
 	return (1);
 }
+/* 
+			main loop 
+				|
+			check_state 
+		/					\
+	config 			->  	map 
+/		|		\			 |
+empty color texture 	find map start -> check all lines are LINE_MAP
+
+!!!!!!! before changing state config should be complete !!!!!!!!
+
+
+
+*/

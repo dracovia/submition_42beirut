@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/12 17:01:13 by mfassad           #+#    #+#             */
-/*   Updated: 2026/08/12 17:13:06 by mfassad          ###   ########.fr       */
+/*   Updated: 2026/09/21 15:08:47 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,3 +72,32 @@ char	**read_file(char *filename)
 	}
 	return (lines);
 }
+/*
+             read_file()
+                  │
+                  ▼
+            count_lines()
+                  │
+         open file #1
+                  │
+        count every line
+                  │
+           close file
+                  │
+                  ▼
+       malloc count + 1
+                  │
+                  ▼
+            fill_lines()
+                  │
+         open file #2
+                  │
+       store every line
+                  │
+         lines[i] = NULL
+                  │
+           close file
+                  │
+                  ▼
+            return lines
+*/
