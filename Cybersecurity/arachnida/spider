@@ -1,0 +1,187 @@
+#!/usr/bin/env python3
+
+import sys
+import requests
+import argparse
+
+from html.parser import HTMLParser
+import os
+from urllib.parse import urljoin, urlparse
+
+IMAGE_EXTENSIONS = (".jpg", ".jpeg", ".png", ".gif", ".bmp")
+
+
+class PageParser(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.images = []
+        self.links = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag == "img":
+            for name, value in attrs:
+                if name == "src":
+                    self.images.append(value)
+
+        elif tag == "a":
+            for name, value in attrs:
+                if name == "href":
+                    self.links.append(value)
+
+def download_image(image_url, output_dir="./data"):
+    try:
+        response = requests.get(image_url, timeout=10)
+        response.raise_for_status()
+
+        os.makedirs(output_dir, exist_ok=True)
+
+        parsed_url = urlparse(image_url)
+        filename = os.path.basename(parsed_url.path)
+
+        filepath = os.path.join(output_dir, filename)
+
+        name, extension = os.path.splitext(filename)
+        counter = 1
+
+        while os.path.exists(filepath):
+            filename = f"{name}_{counter}{extension}"
+            filepath = os.path.join(output_dir, filename)
+            counter += 1
+
+        with open(filepath, "wb") as file:
+            file.write(response.content)
+
+        print(f"Downloaded: {filepath}")
+
+    except requests.RequestException as error:
+        print(f"Failed to download {image_url}: {error}")
+    except OSError as error:
+        print(f"Failed to save {image_url}: {error}")
+
+def crawl(
+    url,
+    output_dir,
+    current_depth,
+    max_depth,
+    visited,
+    downloaded_images):
+    parsed = urlparse(url)
+    url = parsed._replace(fragment="").geturl()
+    if url in visited:
+        return
+
+    visited.add(url)
+
+    print(f"[Depth {current_depth}] {url}")
+
+    try:
+        response = requests.get(url, timeout=10)
+        page_host = urlparse(response.url).netloc
+        response.raise_for_status()
+
+        parser = PageParser()
+        parser.feed(response.text)
+
+        for image in parser.images:
+            full_url = urljoin(response.url, image)
+            parsed_url = urlparse(full_url)
+
+            if not parsed_url.path.lower().endswith(IMAGE_EXTENSIONS):
+                continue
+
+            if full_url in downloaded_images:
+                continue
+
+            downloaded_images.add(full_url)
+
+            download_image(full_url, output_dir)
+
+        if current_depth >= max_depth:
+            return
+
+        for link in parser.links:
+            full_link = urljoin(response.url, link)
+            parsed_link = urlparse(full_link)
+
+            if parsed_link.scheme not in ("http", "https"):
+                continue
+
+            if parsed_link.netloc != page_host:
+                continue
+
+            crawl(
+                full_link,
+                output_dir,
+                current_depth + 1,
+                max_depth,
+                visited,
+                downloaded_images
+            )
+
+    except requests.RequestException as error:
+        print(f"Failed to crawl {url}: {error}")
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Download images from a website"
+    )
+
+    parser.add_argument(
+        "-r",
+        action="store_true",
+        dest="recursive",
+        help="recursively download images"
+    )
+
+    parser.add_argument(
+        "-l",
+        type=int,
+        default=5,
+        dest="level",
+        help="maximum recursion depth"
+    )
+
+    parser.add_argument(
+        "-p",
+        default="./data",
+        dest="path",
+        help="directory where images will be saved"
+    )
+
+    parser.add_argument(
+        "url",
+        help="URL to crawl"
+    )
+
+    args = parser.parse_args()
+    parsed_url = urlparse(args.url)
+
+    if parsed_url.scheme not in ("http", "https"):
+        parser.error("URL must start with http:// or https://")
+        
+    if args.level < 0:
+        parser.error("depth cannot be negative")
+
+    if not args.recursive:
+        max_depth = 0
+    else:
+        max_depth = args.level
+
+    visited = set()
+    downloaded_images = set()
+
+    try:    
+        crawl(
+            args.url,
+            args.path,
+            0,
+            max_depth,
+            visited,
+            downloaded_images
+        )
+
+    except KeyboardInterrupt:
+        print("\nSpider interrupted by user.")
+
+if __name__ == "__main__":
+    main()

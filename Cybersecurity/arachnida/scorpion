@@ -1,0 +1,132 @@
+#!/usr/bin/env python3
+
+import argparse
+import os
+
+from PIL import Image, ExifTags
+from datetime import datetime
+
+IMAGE_EXTENSIONS = (".jpg", ".jpeg", ".png", ".gif", ".bmp")
+
+def format_value(value):
+    if isinstance(value, bytes):
+        return f"<{len(value)} bytes>"
+
+    return value
+
+def display_basic_metadata(filepath):
+    try:
+        with Image.open(filepath) as image:
+            print(f"Format: {image.format}")
+            print(f"Size: {image.width} x {image.height}")
+            print(f"Mode: {image.mode}")
+
+            display_exif_metadata(image)
+            display_other_metadata(image)
+            display_file_metadata(filepath)
+
+    except Exception as error:
+        print(f"Error reading image: {error}")
+
+def display_exif_metadata(image):
+    exif_data = image.getexif()
+
+    if not exif_data:
+        print("EXIF: No EXIF metadata found")
+        return
+
+    print("EXIF:")
+
+    for tag_id, value in exif_data.items():
+        tag_name = ExifTags.TAGS.get(tag_id, tag_id)
+
+        if tag_name in ("ExifOffset", "GPSInfo"):
+            continue
+
+        print(f"  {tag_name}: {format_value(value)}")
+
+    # EXIF sub-IFD
+    try:
+        exif_ifd = exif_data.get_ifd(ExifTags.IFD.Exif)
+
+        if exif_ifd:
+            print("EXIF Sub-IFD:")
+
+            for tag_id, value in exif_ifd.items():
+                tag_name = ExifTags.TAGS.get(tag_id, tag_id)
+                print(f"  {tag_name}: {format_value(value)}")
+
+    except Exception:
+        pass
+
+    # GPS sub-IFD
+    try:
+        gps_ifd = exif_data.get_ifd(ExifTags.IFD.GPSInfo)
+
+        if gps_ifd:
+            print("GPS:")
+
+            for tag_id, value in gps_ifd.items():
+                tag_name = ExifTags.GPSTAGS.get(tag_id, tag_id)
+                print(f"  {tag_name}: {format_value(value)}")
+
+    except Exception:
+        pass
+
+def display_other_metadata(image):
+    if not image.info:
+        print("Other metadata: none")
+        return
+
+    print("Other metadata:")
+
+    for key, value in image.info.items():
+        if key == "exif":
+            print("  exif: <raw EXIF data>")
+            continue
+
+        if isinstance(value, bytes):
+            print(f"  {key}: <{len(value)} bytes>")
+        else:
+            print(f"  {key}: {value}")
+        
+def display_file_metadata(filepath):
+    file_stats = os.stat(filepath)
+    print("File metadata:")
+    print(f"  File size: {file_stats.st_size} bytes")
+    print(f"  Last modified: {datetime.fromtimestamp(file_stats.st_mtime)}")
+
+    if hasattr(file_stats, 'st_birthtime'):
+        print(f"  Creation time: {datetime.fromtimestamp(file_stats.st_birthtime)}")
+    else:
+        print("  Creation time: Not available on this platform")
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Display image metadata"
+    )
+
+    parser.add_argument(
+        "files",
+        nargs="+",
+        help="image files to analyze"
+    )
+
+    args = parser.parse_args()
+
+    for filepath in args.files:
+        print(f"\nFile: {filepath}")
+
+        if not os.path.isfile(filepath):
+            print("Error: file does not exist")
+            continue
+
+        if not filepath.lower().endswith(IMAGE_EXTENSIONS):
+            print("Error: unsupported image format")
+            continue
+
+        display_basic_metadata(filepath)
+
+
+if __name__ == "__main__":
+    main()
