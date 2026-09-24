@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import sys
 import requests
 import argparse
 
@@ -27,6 +26,7 @@ class PageParser(HTMLParser):
             for name, value in attrs:
                 if name == "href":
                     self.links.append(value)
+
 
 def download_image(image_url, output_dir="./data"):
     try:
@@ -58,13 +58,8 @@ def download_image(image_url, output_dir="./data"):
     except OSError as error:
         print(f"Failed to save {image_url}: {error}")
 
-def crawl(
-    url,
-    output_dir,
-    current_depth,
-    max_depth,
-    visited,
-    downloaded_images):
+
+def crawl(url, output_dir, current_depth, max_depth, visited, downloaded):
     parsed = urlparse(url)
     url = parsed._replace(fragment="").geturl()
     if url in visited:
@@ -89,10 +84,10 @@ def crawl(
             if not parsed_url.path.lower().endswith(IMAGE_EXTENSIONS):
                 continue
 
-            if full_url in downloaded_images:
+            if full_url in downloaded:
                 continue
 
-            downloaded_images.add(full_url)
+            downloaded.add(full_url)
 
             download_image(full_url, output_dir)
 
@@ -115,11 +110,12 @@ def crawl(
                 current_depth + 1,
                 max_depth,
                 visited,
-                downloaded_images
+                downloaded
             )
 
     except requests.RequestException as error:
         print(f"Failed to crawl {url}: {error}")
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -158,7 +154,6 @@ def main():
 
     if parsed_url.scheme not in ("http", "https"):
         parser.error("URL must start with http:// or https://")
-        
     if args.level < 0:
         parser.error("depth cannot be negative")
 
@@ -170,7 +165,7 @@ def main():
     visited = set()
     downloaded_images = set()
 
-    try:    
+    try:
         crawl(
             args.url,
             args.path,
@@ -182,6 +177,7 @@ def main():
 
     except KeyboardInterrupt:
         print("\nSpider interrupted by user.")
+
 
 if __name__ == "__main__":
     main()

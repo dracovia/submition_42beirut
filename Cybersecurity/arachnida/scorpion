@@ -8,11 +8,13 @@ from datetime import datetime
 
 IMAGE_EXTENSIONS = (".jpg", ".jpeg", ".png", ".gif", ".bmp")
 
+
 def format_value(value):
     if isinstance(value, bytes):
         return f"<{len(value)} bytes>"
 
     return value
+
 
 def display_basic_metadata(filepath):
     try:
@@ -27,6 +29,7 @@ def display_basic_metadata(filepath):
 
     except Exception as error:
         print(f"Error reading image: {error}")
+
 
 def display_exif_metadata(image):
     exif_data = image.getexif()
@@ -73,6 +76,7 @@ def display_exif_metadata(image):
     except Exception:
         pass
 
+
 def display_other_metadata(image):
     if not image.info:
         print("Other metadata: none")
@@ -89,7 +93,8 @@ def display_other_metadata(image):
             print(f"  {key}: <{len(value)} bytes>")
         else:
             print(f"  {key}: {value}")
-        
+
+
 def display_file_metadata(filepath):
     file_stats = os.stat(filepath)
     print("File metadata:")
@@ -97,9 +102,10 @@ def display_file_metadata(filepath):
     print(f"  Last modified: {datetime.fromtimestamp(file_stats.st_mtime)}")
 
     if hasattr(file_stats, 'st_birthtime'):
-        print(f"  Creation time: {datetime.fromtimestamp(file_stats.st_birthtime)}")
+        print(f"  Creation: {datetime.fromtimestamp(file_stats.st_birthtime)}")
     else:
         print("  Creation time: Not available on this platform")
+
 
 def main():
     parser = argparse.ArgumentParser(
