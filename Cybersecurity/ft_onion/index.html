@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <title>Kira's Mood Meter</title>
+
+    <style>
+        body {
+            height: 100vh;
+            margin: 0;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: #9da584; 
+            font-family: 'Press Start 2P', monospace;
+        }
+
+
+        .mood-container {
+
+            width: 400px;
+            padding: 30px;
+
+            text-align: center;
+
+            background: #a8b18c;
+
+            border: 5px dashed #1d2415;
+
+            box-shadow:
+                8px 8px 0px #1d2415;
+
+        }
+
+
+        h1 {
+            margin-top: 0;
+
+            font-size: 32px;
+
+            color: #1d2415;
+
+            text-transform: uppercase;
+        }
+
+
+        .cat {
+
+            width: 200px;
+
+            image-rendering: pixelated;
+
+            margin: 20px auto;
+
+            display: block;
+        }
+
+
+        /* Slider */
+
+        .slider {
+
+            width: 90%;
+
+            appearance: none;
+
+            height: 8px;
+
+            background: #1d2415;
+
+            outline: none;
+
+        }
+
+
+        .slider::-webkit-slider-thumb {
+
+            appearance: none;
+
+            width: 20px;
+            height: 20px;
+
+            background: #1d2415;
+
+            cursor: pointer;
+
+        }
+
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="mood-container">
+
+
+    <h1>
+        Kira's Mood Meter
+    </h1>
+
+
+    <img 
+        class="cat"
+        id = "cat"
+        src="./images/sad.png"
+        alt="Kira the cat"
+    >
+
+
+    <input 
+        class="slider"
+        id="mood-slider"
+        type="range"
+        min="0"
+        max="100"
+        value="50"
+    >
+   <p id="mood-text">
+        Kira is okay
+   </p>
+
+</div>
+<script>
+
+const slider = document.getElementById("mood-slider");
+const cat = document.getElementById("cat");
+const moodText = document.getElementById("mood-text");
+
+
+slider.addEventListener("input", function() {
+
+    let happiness = slider.value;
+
+
+    if (happiness <= 20) {
+
+        cat.src = "./images/sad.png";
+        moodText.textContent = "Kira is feeling lonely...";
+
+    }
+
+    else if (happiness <= 40) {
+
+        cat.src = "./images/tired.png";
+        moodText.textContent = "Kira needs some rest...";
+
+    }
+
+    else if (happiness <= 60) {
+
+        cat.src = "./images/normal.png";
+        moodText.textContent = "Kira is okay.";
+
+    }
+
+    else if (happiness <= 80) {
+
+        cat.src = "./images/happy.png";
+        moodText.textContent = "Kira is happy!";
+
+    }
+
+    else {
+
+        cat.src = "./images/very_happy.png";
+        moodText.textContent = "Kira is super happy!!";
+
+    }
+
+});
+
+
+</script>
+
+</body>
+</html>
+
