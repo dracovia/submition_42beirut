@@ -1,0 +1,223 @@
+#!/usr/bin/env python3
+
+import sys
+from cryptography.fernet import Fernet, InvalidToken
+import time
+import hmac
+import hashlib
+import os
+
+
+def read_file(filename):
+    try:
+        with open(filename, "r") as file:
+            content = file.read()
+
+        return content
+
+    except FileNotFoundError:
+        print(f"Error: file '{filename}' not found")
+        return None
+
+    except OSError as error:
+        print(f"Error: could not read '{filename}': {error}")
+        return None
+
+
+def validate_key(key):
+    if len(key) < 64:
+        print("Error: key must contain at least 64 hexadecimal characters")
+        return False
+
+    for char in key:
+        if char not in "0123456789abcdefABCDEF":
+            print("Error: key must contain only hexadecimal characters")
+            return False
+
+    return True
+
+
+def get_or_create_encryption_key():
+    try:
+        with open(".ft_otp_secret", "rb") as file:
+            return file.read()
+
+    except FileNotFoundError:
+        key = Fernet.generate_key()
+
+        try:
+            with open(".ft_otp_secret", "wb") as file:
+                file.write(key)
+
+            os.chmod(".ft_otp_secret", 0o600)
+
+            return key
+
+        except OSError as error:
+            print(f"Error: could not save encryption key: {error}")
+            return None
+
+    except OSError as error:
+        print(f"Error: could not read encryption key: {error}")
+        return None
+
+
+def load_encryption_key():
+    try:
+        with open(".ft_otp_secret", "rb") as file:
+            return file.read()
+
+    except FileNotFoundError:
+        print("Error: encryption key not found")
+        return None
+
+    except OSError as error:
+        print(f"Error: could not read encryption key: {error}")
+        return None
+
+
+def decrypt_key(filename):
+    try:
+        with open(filename, "rb") as file:
+            encrypted_key = file.read()
+
+        encryption_key = load_encryption_key()
+
+        if encryption_key is None:
+            return None
+
+        fernet = Fernet(encryption_key)
+        decrypted_key = fernet.decrypt(encrypted_key)
+
+        return decrypted_key.decode()
+
+    except FileNotFoundError:
+        print(f"Error: file '{filename}' not found")
+        return None
+
+    except InvalidToken:
+        print("Error: could not decrypt key")
+        return None
+
+    except (OSError, ValueError, UnicodeDecodeError) as error:
+        print(f"Error: could not read key: {error}")
+        return None
+
+
+def save_key(key):
+    try:
+        encryption_key = get_or_create_encryption_key()
+
+        if encryption_key is None:
+            return False
+
+        fernet = Fernet(encryption_key)
+        encrypted_key = fernet.encrypt(key.encode())
+
+        with open("ft_otp.key", "wb") as file:
+            file.write(encrypted_key)
+
+        os.chmod("ft_otp.key", 0o600)
+
+        print("Key was successfully saved in ft_otp.key.")
+        return True
+
+    except (OSError, ValueError) as error:
+        print(f"Error: could not save key: {error}")
+        return False
+
+
+def hex_to_bytes(key):
+    try:
+        return bytes.fromhex(key)
+
+    except ValueError:
+        print("Error: invalid hexadecimal key")
+        return None
+
+
+def get_time_counter():
+    current_time = int(time.time())
+    counter = current_time // 30
+    return counter
+
+
+def counter_to_bytes(counter):
+    return counter.to_bytes(8, byteorder="big")
+
+
+def generate_hmac(key_bytes, counter_bytes):
+    return hmac.new(
+        key_bytes,
+        counter_bytes,
+        hashlib.sha1
+    ).digest()
+
+
+def dynamic_truncation(hmac_result):
+    offset = hmac_result[-1] & 0x0F
+
+    binary_code = (
+        ((hmac_result[offset] & 0x7F) << 24)
+        | ((hmac_result[offset + 1] & 0xFF) << 16)
+        | ((hmac_result[offset + 2] & 0xFF) << 8)
+        | (hmac_result[offset + 3] & 0xFF)
+    )
+
+    return binary_code
+
+
+def generate_otp(binary_code):
+    otp = binary_code % 1000000
+    return f"{otp:06d}"
+
+
+def generate_totp(key_bytes):
+    counter = get_time_counter()
+    counter_bytes = counter_to_bytes(counter)
+    hmac_result = generate_hmac(key_bytes, counter_bytes)
+    binary_code = dynamic_truncation(hmac_result)
+    return generate_otp(binary_code)
+
+
+def main():
+    if len(sys.argv) != 3:
+        print("Usage: ./ft_otp -g <file>")
+        print("       ./ft_otp -k <file>")
+        return
+
+    option = sys.argv[1]
+    filename = sys.argv[2]
+
+    if option == "-g":
+        key = read_file(filename)
+
+        if key is None:
+            return
+
+        if not validate_key(key):
+            return
+
+        save_key(key)
+
+    elif option == "-k":
+        key = decrypt_key(filename)
+
+        if key is None:
+            return
+
+        key_bytes = hex_to_bytes(key)
+
+        if key_bytes is None:
+            return
+
+        otp = generate_totp(key_bytes)
+
+        print(otp)
+
+    else:
+        print(f"Error: unknown option '{option}'")
+
+
+if __name__ == "__main__":
+    main()
