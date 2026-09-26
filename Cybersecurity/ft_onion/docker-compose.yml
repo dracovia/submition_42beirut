@@ -1,0 +1,14 @@
+services:
+
+  ft_onion:
+    image: ft_onion
+    container_name: ft_onion_server
+
+    ports:
+      - "4242:4242"
+
+    volumes:
+      - tor_data:/var/lib/tor
+
+volumes:
+  tor_data:
