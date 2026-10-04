@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 13:36:11 by mfassad           #+#    #+#             */
-/*   Updated: 2026/09/21 14:41:37 by mfassad          ###   ########.fr       */
+/*   Updated: 2026/10/04 21:40:38 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,6 @@ int	main(int argc, char **argv)
 		free_config(&game.config);
 		return (1);
 	}
-	
+	free_config(&game.config);
 	return (0);
 }

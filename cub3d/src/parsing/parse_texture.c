@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/12 15:28:38 by mfassad           #+#    #+#             */
-/*   Updated: 2026/08/12 15:45:30 by mfassad          ###   ########.fr       */
+/*   Updated: 2026/10/04 21:44:15 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,11 @@ int	parse_texture(char *line, t_line_type type, t_config *config)
 	path = extract_path(line);
 	if (!path)
 		return (0);
+	if (!texture_file_valid(path))
+	{
+		free(path);
+		return (0);
+	}
 	*texture = path;
 	return (1);
 }

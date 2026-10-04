@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 15:22:32 by mfassad           #+#    #+#             */
-/*   Updated: 2026/09/21 14:35:35 by mfassad          ###   ########.fr       */
+/*   Updated: 2026/10/04 21:09:39 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,11 @@ int	parse_file(char *filename, t_config *config)
 		return (0);
 	}
 	if (!store_map(lines, map_start, config))
+	{
+		free_lines(lines);
+		return (0);
+	}
+	if (!validate_map(config))
 	{
 		free_lines(lines);
 		return (0);
