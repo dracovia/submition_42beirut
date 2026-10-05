@@ -6,118 +6,61 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 15:22:32 by mfassad           #+#    #+#             */
-/*   Updated: 2026/10/04 21:09:39 by mfassad          ###   ########.fr       */
+/*   Updated: 2026/10/05 10:16:33 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-parse_file()
-    │
-    ├── open file
-    │
-    ├── get_next_line
-    │
-    ├── identify line
-    │
-    ├── parse texture
-    │
-    ├── parse color
-    │
-    ├── store map
-    │
-    └── close file
-*/
 #include "cub3d.h"
 
-static int	is_texture(t_line_type type)
+static int	parse_lines(char **lines, t_config *config,
+		t_parse_state *state, int *map_start)
 {
-	return (type == LINE_NO || type == LINE_SO
-		|| type == LINE_WE || type == LINE_EA);
-}
+	t_line_type	type;
+	int			i;
 
-static int	is_color(t_line_type type)
-{
-	return (type == LINE_F || type == LINE_C);
-}
-
-static int	handle_config(char *line, t_line_type type,
-		t_config *config, t_parse_state *state)
-{
-	if (type == LINE_EMPTY)
-		return (1);
-	if (is_texture(type))
-		return (parse_texture(line, type, config));
-	if (is_color(type))
-		return (parse_color(line, type, config));
-	if (type == LINE_MAP)
+	i = 0;
+	while (lines[i])
 	{
-		if (!config_complete(config))
+		type = identify_line(lines[i]);
+		if (!handle_line(lines[i], type, config, state))
 			return (0);
-		*state = PARSE_MAP;
-		return (1);
+		if (type == LINE_MAP && *map_start == -1)
+			*map_start = i;
+		i++;
 	}
-	return (0);
-}
-
-static int	handle_map(t_line_type type)
-{
-	if (type != LINE_MAP)
-		return (0);
 	return (1);
 }
 
-static int	handle_line(char *line, t_line_type type,
-		t_config *config, t_parse_state *state)
+static int	finish_parsing(char **lines, int map_start, t_config *config)
 {
-	if (*state == PARSE_CONFIG)
-		return (handle_config(line, type, config, state));
-	return (handle_map(type));
+	if (!config_complete(config) || map_start == -1)
+		return (0);
+	if (!store_map(lines, map_start, config))
+		return (0);
+	if (!validate_map(config))
+		return (0);
+	return (1);
 }
 
 int	parse_file(char *filename, t_config *config)
 {
 	t_parse_state	state;
-	t_line_type		type;
 	char			**lines;
 	int				map_start;
-	int				i;
+	int				status;
 
 	lines = read_file(filename);
 	if (!lines)
 		return (0);
 	state = PARSE_CONFIG;
 	map_start = -1;
-	i = 0;
-	while (lines[i])
-	{
-		type = identify_line(lines[i]);
-		if (!handle_line(lines[i], type, config, &state))
-		{
-			free_lines(lines);
-			return (0);
-		}
-		if (type == LINE_MAP && map_start == -1)
-			map_start = i;
-		i++;
-	}
-	if (!config_complete(config) || map_start == -1)
-	{
-		free_lines(lines);
-		return (0);
-	}
-	if (!store_map(lines, map_start, config))
-	{
-		free_lines(lines);
-		return (0);
-	}
-	if (!validate_map(config))
-	{
-		free_lines(lines);
-		return (0);
-	}
+	status = parse_lines(lines, config, &state, &map_start);
+	if (status)
+		status = finish_parsing(lines, map_start, config);
 	free_lines(lines);
-	return (1);
+	return (status);
 }
+
 /* 
 			main loop 
 				|
@@ -128,7 +71,5 @@ int	parse_file(char *filename, t_config *config)
 empty color texture 	find map start -> check all lines are LINE_MAP
 
 !!!!!!! before changing state config should be complete !!!!!!!!
-
-
 
 */

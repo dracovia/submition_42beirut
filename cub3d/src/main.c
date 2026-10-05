@@ -6,25 +6,9 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 13:36:11 by mfassad           #+#    #+#             */
-/*   Updated: 2026/10/04 21:40:38 by mfassad          ###   ########.fr       */
+/*   Updated: 2026/10/05 10:35:33 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-main
- │
- ├── validate arguments
- │
- ├── initialize data
- │
- ├── parse .cub
- │
- ├── initialize graphics
- │
- ├── run game
- │
- └── clean everything
- */
 
 #include "cub3d.h"
 

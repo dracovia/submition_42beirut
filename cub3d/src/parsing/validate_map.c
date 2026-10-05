@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/04 00:00:00 by mfassad           #+#    #+#             */
-/*   Updated: 2026/10/04 20:48:04 by mfassad          ###   ########.fr       */
+/*   Updated: 2026/10/05 10:17:54 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,6 @@ static int	is_cell_closed(t_config *config, int y, int x)
 	if (is_outside(config, y, x + 1))
 		return (0);
 	return (1);
-}
-
-static void	set_player(t_config *config, int y, int x)
-{
-	config->player.x = x;
-	config->player.y = y;
-	config->player.direction = config->map[y][x];
-	config->player.count++;
 }
 
 int	validate_map(t_config *config)

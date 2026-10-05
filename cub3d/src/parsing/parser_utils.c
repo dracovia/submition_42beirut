@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 15:42:08 by mfassad           #+#    #+#             */
-/*   Updated: 2026/10/04 21:38:45 by mfassad          ###   ########.fr       */
+/*   Updated: 2026/10/05 10:18:08 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,12 @@ void	free_lines(char **lines)
 		i++;
 	}
 	free(lines);
+}
+
+void	set_player(t_config *config, int y, int x)
+{
+	config->player.x = x;
+	config->player.y = y;
+	config->player.direction = config->map[y][x];
+	config->player.count++;
 }

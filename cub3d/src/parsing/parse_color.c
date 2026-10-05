@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/12 17:27:53 by mfassad           #+#    #+#             */
-/*   Updated: 2026/09/21 15:11:34 by mfassad          ###   ########.fr       */
+/*   Updated: 2026/10/05 10:10:27 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ static int	parse_component(char *line, int *i, int *value)
 
 static int	parse_rgb(char *line, t_color *color)
 {
-	int	i; // to iterate line 
+	int	i;
 	int	value[3];
-	int	j; // to iterate value array 
+	int	j;
 
 	i = 1;
 	j = 0;

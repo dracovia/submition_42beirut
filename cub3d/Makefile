@@ -6,7 +6,7 @@
 #    By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/08/10 13:31:05 by mfassad           #+#    #+#              #
-#    Updated: 2026/10/04 21:51:25 by mfassad          ###   ########.fr        #
+#    Updated: 2026/10/05 10:39:28 by mfassad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ LIBFT = $(LIBFT_DIR)/libft.a
 SRC = \
 	src/main.c \
 	src/initialization/init_config.c \
-	src/parsing/parse.c \
+	src/parsing/parse_file_utils.c \
 	src/parsing/parse_file.c \
 	src/parsing/validate_texture.c \
 	src/parsing/parse_texture.c \

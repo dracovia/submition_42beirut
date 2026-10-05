@@ -6,7 +6,7 @@
 /*   By: mfassad <mfassad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 13:37:13 by mfassad           #+#    #+#             */
-/*   Updated: 2026/10/04 21:50:42 by mfassad          ###   ########.fr       */
+/*   Updated: 2026/10/05 10:20:49 by mfassad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,26 +73,32 @@ typedef struct s_game
 	t_config	config;
 }	t_game;
 
-void	init_color(t_color *color);
-void	init_player(t_player *player);
-void	init_config(t_config *config);
+void			init_color(t_color *color);
+void			init_player(t_player *player);
+void			init_config(t_config *config);
 
-int		validate_filename(char *filename);
-int		parse_file(char *filename, t_config *config);
+int				validate_filename(char *filename);
+int				parse_file(char *filename, t_config *config);
 
-t_line_type	identify_line(char *line);
+t_line_type		identify_line(char *line);
 
-int	texture_file_valid(char *path);
-int	parse_texture(char *line, t_line_type type, t_config *config);
-void	free_config(t_config *config);
+int				texture_file_valid(char *path);
+int				parse_texture(char *line, t_line_type type,
+					t_config *config);
+void			free_config(t_config *config);
 
-char	**read_file(char *filename);
-void	free_lines(char **lines);
+char			**read_file(char *filename);
+void			free_lines(char **lines);
 
-int	parse_color(char *line, t_line_type type, t_config *config);
-int	config_complete(t_config *config);
+int				parse_color(char *line, t_line_type type,
+					t_config *config);
+int				config_complete(t_config *config);
 
-int	store_map(char **lines, int start, t_config *config);
-int	validate_map(t_config *config);
+int				store_map(char **lines, int start, t_config *config);
+int				validate_map(t_config *config);
+int				handle_line(char *line, t_line_type type,
+					t_config *config, t_parse_state *state);
+
+void			set_player(t_config *config, int y, int x);
 
 #endif
